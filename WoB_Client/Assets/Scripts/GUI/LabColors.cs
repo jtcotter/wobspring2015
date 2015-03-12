@@ -1,8 +1,13 @@
 using UnityEngine;
 [System.Serializable]
 
-//obtained from http://wiki.unity3d.com/index.php/LABColor
-//jtc - added functions Diff and Increment for transitioning through a range of colors
+//author: Charles Hinshaw
+//copyright: Content is available under Creative Commons Attribution Share Alike.
+//licence: http://creativecommons.org/licenses/by-sa/3.0/
+//disclaimer: This website is a wiki and is open to public edits. By its nature no party can take 
+//link: http://wiki.unity3d.com/index.php/LABColor
+//responsibility for the content or availability of the content within this site.
+//changes: jtc - added functions Diff and Increment for transitioning through a range of colors
 
 public struct LABColor{
 	
