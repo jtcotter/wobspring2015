@@ -87,6 +87,7 @@ public class Functions
 			return null;
 		}
 		CSVObject csvObject = new CSVObject ();
+		int cnt = 0;
 
 		List<string> xAxisLabels = new List<string> (); // i.e. Months
 		string[] rowList = csv.Split ('\n');
@@ -99,6 +100,7 @@ public class Functions
 			string[] elements = rowList [i].Split (',');
 
 			if (i == 0) { // Labels
+				cnt = elements.Length;  //set definite count of elements
 				for (int j = 1; j < elements.Length; j++) {
 					xAxisLabels.Add (elements [j]);
 				}
@@ -115,6 +117,10 @@ public class Functions
 					} else {
 						values.Add (elements [j].Trim ());
 					}
+				}
+				//add zeros if any elements are missing (i.e. species extinct)
+				for (int j = elements.Length; j < cnt; j++) {
+					values.Add ("0");
 				}
 
 				csvObject.csvList [seriesLabel] = values;
@@ -162,6 +168,8 @@ public class Functions
 				normStr = "Rove and ground beetles [9]";
 			} else if (normStr.Equals ("Aquatic crustaceans [35]")) {
 				normStr = "Crab [35]";
+			} else if (normStr.Equals ("Centipedes [18]")) {
+				normStr = "Centipede [18]";
 			}
 		}
 

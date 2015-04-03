@@ -35,5 +35,11 @@ public class ConvergeParam
 		return (value != origVal);
 	}
 
+	//player does not need to see actual values; using 0-100 as
+	//normalized range for all values
+	public static int NormParam (float val, float min, float max, float norm = 100f) {
+		return Mathf.RoundToInt((val - min) / (max - min) * norm);
+	}
+
 }
 

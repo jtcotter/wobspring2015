@@ -86,8 +86,11 @@ public class ConvergeGame : MonoBehaviour
 	void Start ()
 	{
 		Game.StartEnterTransition ();
-		//get list of ecosystems
+		//to generate converge-ecosystem.txt, remove comments and let protocol run;
+		//server will generate txt from sql table
 		//NetworkManager.Send(ConvergeEcosystemsProtocol.Prepare(),ProcessConvergeEcosystems);
+
+		//get list of ecosystems
 		ReadConvergeEcosystemsFile ();
 		//set default ecosystem values
 		new_ecosystem_id = Constants.ID_NOT_SET;
@@ -281,47 +284,73 @@ public class ConvergeGame : MonoBehaviour
 						break;
 					}
 				
-					Rect itemRect;
+					Rect labelRect;
 					//draw name, paramId
-					itemRect = new Rect (col * (350 + bufferBorder), row * 35, 250, 30);
-					if (itemRect.Contains (Event.current.mousePosition)) {
+					labelRect = new Rect (col * (350 + bufferBorder), row * 35, 250, 30);
+					if (labelRect.Contains (Event.current.mousePosition)) {
 						manager.mouseOverLabels.Add (param.name);
 						manager.selected = param.name;
 						manager.lastSeriesToDraw = param.name;
 					}
 					style.normal.textColor = (param.name == manager.selected) ? 
-					manager.seriesColors [param.name] : Color.white;
-					GUI.Label (itemRect, param.name + " - " + param.paramId, style);
+						manager.seriesColors [param.name] : Color.white;
+					GUI.Label (labelRect, param.name + " - " + param.paramId, style);
 					//if player clicks on species, set as selected and activate foodWeb
-					if (GUI.Button (itemRect, "", GUIStyle.none)) {
+					if (GUI.Button (labelRect, "", GUIStyle.none)) {
 						foodWeb.selected = SpeciesTable.GetSpeciesName (param.name);
 						foodWeb.SetActive (true, foodWeb.selected);
 					}
 				
-					//draw colored bar showing original value
-					itemRect = new Rect (col * (350 + bufferBorder) + 250 + bufferBorder, row * 35 + 5, 100, 10);
-					if (itemRect.Contains (Event.current.mousePosition)) {
+					//draw slider with underlying colored bar showing original value
+					Rect sliderRect = new Rect (labelRect.x + 250 + bufferBorder, labelRect.y + 5, 100, 20);
+					if (sliderRect.Contains (Event.current.mousePosition)) {
 						manager.mouseOverLabels.Add (param.name);
 						manager.selected = param.name;
 						manager.lastSeriesToDraw = param.name;
 					}
 					GUI.color = manager.seriesColors [param.name];
-					float origValWidth = (param.origVal / (max - min)) * itemRect.width;
-					GUI.DrawTexture (new Rect (itemRect.x, itemRect.y, origValWidth, itemRect.height),
-				                 Functions.CreateTexture2D (new Color (0.85f, 0.85f, 0.85f)));
+					float origValWidth = 
+						ConvergeParam.NormParam (param.origVal, min, max, sliderRect.width);
+					//float origValWidth = (param.origVal / (max - min)) * sliderRect.width;
+					Color slTexture= new Color (0.85f, 0.85f, 0.85f);
+					GUI.DrawTexture (new Rect (sliderRect.x, sliderRect.y, origValWidth, 10), //sliderRect.height),
+					                 Functions.CreateTexture2D (slTexture));
 					GUI.color = temp;
-				
+					
 					//draw slider for parameter value manipulation
 					GUI.backgroundColor = manager.seriesColors [param.name];
 					param.value = GUI.HorizontalSlider (
-					itemRect, 
+					sliderRect, 
 					param.value, 
 					min, 
 					max
 					);
 					GUI.backgroundColor = temp;
-				
-				
+
+					//show normalized value for parameter
+					if (param.name.Equals (manager.selected)) {
+						string valLabel = String.Format (
+							"{0}", 
+							ConvergeParam.NormParam (param.value, min, max));
+						if (param.value != param.origVal) {
+							valLabel = valLabel + String.Format (
+								" [{0}]", 
+								ConvergeParam.NormParam (param.origVal, min, max));
+						}
+						style.alignment = TextAnchor.UpperLeft;
+						float xPosn = 
+							sliderRect.x + 
+							(param.value / (max - min)) * 
+								sliderRect.width +
+								bufferBorder;
+						Rect valRect = new Rect(xPosn, labelRect.y, 70, labelRect.height - 5);
+
+						GUI.Box (valRect, valLabel);
+						GUI.color = manager.seriesColors [param.name];
+						GUI.backgroundColor = temp;
+						style.alignment = TextAnchor.UpperRight;
+					}
+
 					if ((row + 1) * 35 + 30 > entryHeight) {
 						col++;
 						row = 0;
