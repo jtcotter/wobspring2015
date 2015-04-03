@@ -12,9 +12,7 @@ package simulation.simjob;
 public class NodeTimesteps {
 
     protected int nodeId;
-    protected double[] biomass, ppBiomass, predBiomass, predShareGrpBiomass, preyBiomass,
-            preyShareGrpBiomass, dietGrpBiomass, totBiomass;
-    protected double[][] trophGrpBiomass;
+    protected double[] biomass;
 
     public NodeTimesteps(int nodeId, int count) {
         this.nodeId = nodeId;

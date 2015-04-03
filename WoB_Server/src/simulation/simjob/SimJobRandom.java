@@ -141,8 +141,18 @@ public class SimJobRandom extends SimJob {
         HERBIVORE, INSECT, RANDOM
     }
 
-    public static final int DFLT_MAX_BIOMASS_COEFF = 10000;  //3000; //5000.0
-    public static final double DFLT_PP_TOTAL_BIOMASS = 0.0;
+    public static final int DFLT_MAX_BIOMASS_COEFF = 100;  //10000;  //3000; //5000.0
+    //multiple of max_biomass_coeff for second size tier (larger animals)
+    public static final double MAX_BIOMASS_MULTIPLE = 30.0f; 
+    public static final double MIN_BIOMASS_FRACTION = 0.25f;
+    
+    public static final int DFLT_TIMESTEPS = 400;
+
+    //PP = PRIMARY PRODUCER (AKA GRASS)
+    public static final double DFLT_PP_PER_UNIT_BIOMASS = 1;
+    public static final double DFLT_PP_TOTAL_BIOMASS = 0.0;  //determined randomly
+    public static final double DFLT_PP_PARAMK = 2000.0;  //10000.0;  //k=carrying capacity  (SEConfig properties dflt = 1.0)
+
     public static final int DFLT_MIN_SPECIES = 10;
     public static final int DFLT_MAX_SPECIES = 30;
 
@@ -218,7 +228,16 @@ public class SimJobRandom extends SimJob {
                 distrib = nodeDistr.getValue();
                 stn = st.getSimTestNode(nodeId);
                 perUnitBiomass = stn.getPerUnitBiomass();
-                biomass = Math.max(biomass, perUnitBiomass * 2);
+                //jtc - 3/30/15; perUnitBiomass * 2 creating too large a differential
+                //(e.g. elephants); eliminating
+                //biomass = Math.max(biomass, perUnitBiomass * 2);
+                
+                //jtc - 3/30/15; not having that variation creates "bland" ecosystems...
+                //i.e. have a second tier of sizing for large species
+                if (perUnitBiomass * 2 > biomass) {
+                    biomass *= MAX_BIOMASS_MULTIPLE;
+                }
+                
                 /*if node already exists (should only happen for multi-node plants),
                  just update biomass*/
                 szt = getSpeciesZoneByNodeId(nodeId);
@@ -449,7 +468,16 @@ public class SimJobRandom extends SimJob {
     }
 
     private int getRandomBiomass() {
-        return (int) (rand.getNextDouble() * (double) maxBiomassCoeff);
+        double min_biomass = getMinBiomass();
+        return (int) Math.ceil(
+                min_biomass + 
+                        rand.getNextDouble() * 
+                                (double) maxBiomassCoeff
+        );
+    }
+    
+    private double getMinBiomass() {
+        return maxBiomassCoeff * MIN_BIOMASS_FRACTION;
     }
 
     private int getRandomSpeciesNode(List<Integer> speciesIdList) {

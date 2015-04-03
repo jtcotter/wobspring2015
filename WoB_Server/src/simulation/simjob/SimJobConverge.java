@@ -71,7 +71,8 @@ public class SimJobConverge {
         }
         //remove trailing information (follows at least one trailing blank)
         for (int i=0; i < dataSet.size(); i++) {
-            if (dataSet.get(i).size() < simJob.getTimesteps()) {
+            //note: species that go extinct have less than {timesteps} values
+            if (dataSet.get(i).size() < 2) {   
                 break;
             }
             String line = dataSet.get(i).toString();

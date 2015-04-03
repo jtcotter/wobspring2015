@@ -69,16 +69,16 @@ class FormRandomSim extends JDialog {
         final JTextField maxBiomassField = new JTextField(String.valueOf(SimJobRandom.DFLT_MAX_BIOMASS_COEFF));
 
         final JLabel timestepsLabel = new JLabel("Timesteps (int): ", SwingConstants.RIGHT);
-        final JTextField timestepsField = new JTextField(String.valueOf(SimJob.DFLT_TIMESTEPS));
+        final JTextField timestepsField = new JTextField(String.valueOf(SimJobRandom.DFLT_TIMESTEPS));
 
         final JLabel ppTotalLabel = new JLabel("Primary Producer (PP) Total Biomass (double): ", SwingConstants.RIGHT);
         final JTextField ppTotalField = new JTextField(String.valueOf(SimJobRandom.DFLT_PP_TOTAL_BIOMASS));
 
         final JLabel ppPerUnitLabel = new JLabel("PP Per Unit Biomass (double): ", SwingConstants.RIGHT);
-        final JTextField ppPerUnitField = new JTextField(String.valueOf(SimJob.DFLT_PP_PER_UNIT_BIOMASS));
+        final JTextField ppPerUnitField = new JTextField(String.valueOf(SimJobRandom.DFLT_PP_PER_UNIT_BIOMASS));
 
         final JLabel ppParamKLabel = new JLabel("PP Carrying Capacity (k) (double): ", SwingConstants.RIGHT);
-        final JTextField ppParamKField = new JTextField(String.valueOf(SimJob.DFLT_PP_PARAMK));
+        final JTextField ppParamKField = new JTextField(String.valueOf(SimJobRandom.DFLT_PP_PARAMK));
 
         /*9/29/14, jtc, make it optional to include base ecosystem species.  The functionality
         exists to increase likelihood of viable predator/prey relationships into the i
@@ -172,17 +172,17 @@ class FormRandomSim extends JDialog {
                     jobTemplate.setTimesteps(Integer.parseInt(timestepsField.getText().trim()));
                 }
                 if (ppTotalField.getText().isEmpty()) {
-                    jobTemplate.setPpTotalBiomass(SimJob.DFLT_PP_TOTAL_BIOMASS);
+                    jobTemplate.setPpTotalBiomass(SimJobRandom.DFLT_PP_TOTAL_BIOMASS);
                 } else {
                     jobTemplate.setPpTotalBiomass(Double.parseDouble(ppTotalField.getText().trim()));
                 }
                 if (ppPerUnitField.getText().isEmpty()) {
-                    jobTemplate.setPpPerUnitBiomass(SimJob.DFLT_PP_PER_UNIT_BIOMASS);
+                    jobTemplate.setPpPerUnitBiomass(SimJobRandom.DFLT_PP_PER_UNIT_BIOMASS);
                 } else {
                     jobTemplate.setPpPerUnitBiomass(Double.parseDouble(ppPerUnitField.getText().trim()));
                 }
                 if (ppParamKField.getText().isEmpty()) {
-                    jobTemplate.setPpParamK(SimJob.DFLT_PP_PARAMK);
+                    jobTemplate.setPpParamK(SimJobRandom.DFLT_PP_PARAMK);
                 } else {
                     jobTemplate.setPpParamK(Double.parseDouble(ppParamKField.getText().trim()));
                 }

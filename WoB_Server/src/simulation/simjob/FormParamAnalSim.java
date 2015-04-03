@@ -747,7 +747,7 @@ public class FormParamAnalSim extends javax.swing.JFrame {
         int jobId = SimJob.NO_ID;
         //get original job history
         SimJob oldJob = SimJobDAO.loadCompletedJob(Integer.parseInt(jobStr));
-        EcosystemTimesteps ecosysTimesteps = oldJob.extractCSVData();
+        EcosystemTimesteps ecosysTimesteps = ExtractCSVData.extractCSVData(oldJob.getCsv());
         String includeList = "," + 
                 nodeListPlant.getText() + "," + 
                 nodeListAnimal.getText() + ",";

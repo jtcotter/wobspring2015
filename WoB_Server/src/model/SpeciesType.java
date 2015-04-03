@@ -20,7 +20,7 @@ public class SpeciesType {
     protected String name;
     protected int cost;
     protected String description;
-    protected float biomass;
+    protected float biomass;  //per-unit biomass
     protected short diet_type;
     protected int model_id;
     protected float carrying_capacity;
