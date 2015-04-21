@@ -1,7 +1,8 @@
 wob_server/conf/*
 wob_server/conf/db.conf
-wob_server/conf/db.conf
 wob_server/conf/db.conf local
 wob_server/conf/db.conf remote
+wob_server/src/log/*
+*.meta
 .*
 !/.gitignore
