@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 // Other Imports
 import core.lobby.Lobby;
@@ -45,6 +46,8 @@ import util.Vector3;
  */
 public class GameEngine {
 
+    final static Logger logger = Logger.getLogger(GameEngine.class.getName());
+
     private Lobby lobby;
     private final World world;
     private final Ecosystem ecosystem;
@@ -55,11 +58,14 @@ public class GameEngine {
     private final Queue<PredictionRunnable> waitList = new LinkedList<PredictionRunnable>();
 
     public GameEngine(Lobby lobby, World world, Ecosystem ecosystem) {
+        logger.info("Entering GameEngine constructor");
         this.lobby = lobby;
         this.world = world;
         this.ecosystem = ecosystem;
 
+        logger.info("Creating SimulationEngine");
         this.simEngine = new SimulationEngine();
+        logger.info("Done creating SimulationEngine");
 
         createClockEvents();
     }

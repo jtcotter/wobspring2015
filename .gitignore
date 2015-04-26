@@ -2,6 +2,8 @@
 */nbproject/
 WoB_Server/.svn/
 WoB_Client/.svn/
+.idea
+*.iml
 
 # Exclude files with login credentials
 WoB_Server/conf/db.conf*
