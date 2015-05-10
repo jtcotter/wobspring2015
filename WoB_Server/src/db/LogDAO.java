@@ -45,7 +45,8 @@ public class LogDAO {
     public static boolean createInitialSpecies(int player_id, int zone_id, String species) {
         boolean status = false;
 
-        String query = "INSERT INTO `log_initial_species` (`player_id`, `zone_id`, `species`) VALUES (?, ?, ?)";
+        String query = "INSERT INTO `log_initial_species` (`player_id`, " +
+                "`eco_id`, `species`) VALUES (?, ?, ?)";
 
         Connection con = null;
         PreparedStatement pstmt = null;

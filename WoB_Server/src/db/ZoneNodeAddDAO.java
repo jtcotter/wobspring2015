@@ -16,7 +16,8 @@ public final class ZoneNodeAddDAO {
     }
 
     public static void createEntry(int zone_id, int node_id, int amount) throws SQLException {
-        String query = "INSERT INTO `zone_node_add` (`zone_id`, `node_id`, `amount`) VALUES (?, ?, ?)";
+        String query = "INSERT INTO `eco_node_add` (`eco_id`, `node_id`, " +
+                "`amount`) VALUES (?, ?, ?)";
 
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -38,7 +39,8 @@ public final class ZoneNodeAddDAO {
     }
 
     public static void removeEntry(int zone_id, int node_id) throws SQLException {
-        String query = "DELETE FROM `zone_node_add` WHERE `zone_id` = ? AND `node_id` = ?";
+        String query = "DELETE FROM `eco_node_add` WHERE `eco_id` = ? AND " +
+                "`node_id` = ?";
 
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -61,7 +63,7 @@ public final class ZoneNodeAddDAO {
     public static HashMap<Integer, Integer> getList(int zone_id) throws SQLException {
         HashMap<Integer, Integer> nodeList = new HashMap<Integer, Integer>();
 
-        String query = "SELECT * FROM `zone_node_add` WHERE `zone_id` = ?";
+        String query = "SELECT * FROM `eco_node_add` WHERE `eco_id` = ?";
 
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -92,7 +94,8 @@ public final class ZoneNodeAddDAO {
     }
 
     public static void updateAmount(int zone_id, int node_id, int amount) throws SQLException {
-        String query = "UPDATE `zone_node_add` SET `amount` = ? WHERE `zone_id` = ? AND `node_id` = ?";
+        String query = "UPDATE `eco_node_add` SET `amount` = ? WHERE " +
+                "`eco_id` = ? AND `node_id` = ?";
 
         Connection con = null;
         PreparedStatement pstmt = null;

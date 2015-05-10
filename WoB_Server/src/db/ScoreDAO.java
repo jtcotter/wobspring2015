@@ -12,7 +12,7 @@ import java.util.List;
 import util.Log;
 
 /**
- * Table(s) Required: zone
+ * Table(s) Required: ecosystem
  *
  * @author Gary
  */

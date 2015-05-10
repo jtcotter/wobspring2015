@@ -14,7 +14,8 @@ public final class SpeciesChangeListDAO {
     }
 
     public static void createEntry(int zone_id, int species_id, int biomass) throws SQLException {
-        String query_1 = "SELECT * FROM `zone_species_change` WHERE `zone_id` = ? AND `species_id` = ?";
+        String query_1 = "SELECT * FROM `eco_species_change` WHERE `eco_id` " +
+                "= ? AND `species_id` = ?";
 
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -30,7 +31,8 @@ public final class SpeciesChangeListDAO {
             if (!rs.next()) {
                 pstmt.close();
 
-                String query_2 = "INSERT INTO `zone_species_change` (`zone_id`, `species_id`, `biomass`) VALUES (?, ?, ?)";
+                String query_2 = "INSERT INTO `eco_species_change` " +
+                        "(`eco_id`, `species_id`, `biomass`) VALUES (?, ?, ?)";
                 pstmt = con.prepareStatement(query_2);
                 pstmt.setInt(1, zone_id);
                 pstmt.setInt(2, species_id);
@@ -38,7 +40,8 @@ public final class SpeciesChangeListDAO {
             } else {
                 pstmt.close();
 
-                String query_3 = "UPDATE `zone_species_change` SET `biomass` = ? WHERE `zone_id` = ? AND `species_id` = ?";
+                String query_3 = "UPDATE `eco_species_change` SET `biomass` =" +
+                        " ? WHERE `eco_id` = ? AND `species_id` = ?";
                 pstmt = con.prepareStatement(query_3);
                 pstmt.setInt(1, biomass);
                 pstmt.setInt(2, zone_id);
@@ -55,7 +58,8 @@ public final class SpeciesChangeListDAO {
     }
     
     public static void removeEntry(int zone_id, int... species_id) throws SQLException {
-        String query = "DELETE FROM `zone_species_change` WHERE `zone_id` = ? AND `species_id` IN (";
+        String query = "DELETE FROM `eco_species_change` WHERE `eco_id` = ? " +
+                "AND `species_id` IN (";
 
         for (int i = 0; i < species_id.length; i++) {
             query += "?";
@@ -91,7 +95,7 @@ public final class SpeciesChangeListDAO {
     public static Map<Integer, Integer> getList(int zone_id) throws SQLException {
         Map<Integer, Integer> speciesChangeList = new HashMap<Integer, Integer>();
 
-        String query = "SELECT * FROM `zone_species_change` WHERE `zone_id` = ?";
+        String query = "SELECT * FROM `eco_species_change` WHERE `eco_id` = ?";
 
         Connection con = null;
         PreparedStatement pstmt = null;

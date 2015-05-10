@@ -21,7 +21,9 @@ public final class StatsDAO {
     public static int createStat(int species_id, int month, String type, int amount, int player_id, int zone_id) throws SQLException {
         int stat_id = -1;
 
-        String query = "INSERT INTO `stats` (`species_id`, `month`, `type`, `amount`, `player_id`, `zone_id`) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO `stats` (`species_id`, `month`, `type`, " +
+                "`amount`, `player_id`, `ecosystem_id`) VALUES (?, ?, ?, ?, " +
+                "?, ?)";
 
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -58,7 +60,10 @@ public final class StatsDAO {
         List<Stat> statsList = new ArrayList<Stat>();
 
 //        String query = "SELECT * FROM (SELECT `month`, `species_id`, `type`, SUM(`amount`) AS `amount` FROM `stats` WHERE `player_id` = ? AND `zone_id` = ? AND (`month` BETWEEN ? AND ?) GROUP BY `month`, `species_id`, `type`) AS `stats` ORDER BY `month` DESC LIMIT 30";
-        String query = "SELECT * FROM (SELECT `month`, `species_id`, `type`, SUM(`amount`) AS `amount` FROM `stats` WHERE `player_id` = ? AND `zone_id` = ? GROUP BY `month`, `species_id`, `type`) AS `stats` ORDER BY `month` DESC LIMIT 30";
+        String query = "SELECT * FROM (SELECT `month`, `species_id`, `type`, " +
+                "SUM(`amount`) AS `amount` FROM `stats` WHERE `player_id` = ?" +
+                " AND `ecosystem_id` = ? GROUP BY `month`, `species_id`, " +
+                "`type`) AS `stats` ORDER BY `month` DESC LIMIT 30";
 
         Connection con = null;
         PreparedStatement pstmt = null;
